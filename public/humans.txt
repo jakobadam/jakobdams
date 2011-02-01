@@ -1,0 +1,10 @@
+/* TEAM */
+    Developer: Jakob Aarøe Dam	
+	Twitter: @jakobadam
+	From: Aarhus, Denmark
+
+/* SITE */
+	Language:Danish
+	Doctype:HTML5 with CSS3
+	Tools:Google App Engine
+	IDE:Emacs

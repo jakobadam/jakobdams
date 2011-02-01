@@ -1,0 +1,40 @@
+application: jakobdams
+version: test
+runtime: python
+api_version: 1
+
+default_expiration: '365d'
+
+handlers:
+- url: /img
+  static_dir: img
+
+- url: /js
+  static_dir: js
+
+- url: /css
+  static_dir: css
+
+- url: /live-connect-test/
+  static_files: public/live-connect-test/index.html
+  upload: public/live-connect-test/index.html
+
+- url: /live-connect-test/
+  static_dir: public/live-connect-test
+
+- url: /cse.xml
+  static_files: public/cse.xml
+  upload: public/cse.xml
+
+- url: /humans.txt
+  static_files: public/humans.txt
+  upload: public/humans.txt
+
+- url: /favicon.ico
+  static_files: public/favicon.ico
+  upload: public/favicon.ico
+
+- url: /.*
+  script: main.py
+
+

@@ -12,7 +12,7 @@
     <LookAndFeel nonprofit="false" />
   </CustomSearchEngine>
   <Annotations>
-    <Annotation about="http://jakobdams.appspot.com/*">
+    <Annotation about="http://jdams.org/*">
       <Label name="cse_include" />
     </Annotation>
   </Annotations>

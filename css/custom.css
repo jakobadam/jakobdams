@@ -1,25 +1,13 @@
 /* 
-	Theme Name: StructureTheme
-	Theme URL: http://www.structuretheme.com/
-	Description: The Structure Theme is designed and developed by Muku Studios and Jeff Milone.
-	Author: Organic Themes
-	Author URI: http://www.organicthemes.com
-	Version: 1.0
-	Tags: structure theme, premium wordpress theme, all purpose theme, starter wordpress theme 
-	The CSS, XHTML and design is copyrighted 2010 Structure Theme
-	All Rights Reserved
-	Changelog:
-	v1.0 - 1.30.09
-	New theme
+   Based on: 
+   Theme Name: StructureTheme
+   Theme URL: http://www.structuretheme.com/
 */
 
-@font-face {
-	font-family: 'LeagueGothicRegular';
-	src: url('http://www.zachleat.com/bigtext/demo/css/league-gothic/League_Gothic-webfont.eot');
-	src: local('â˜º'), url('http://www.zachleat.com/bigtext/demo/css/league-gothic/League_Gothic-webfont.woff') format('woff'), url('http://www.zachleat.com/bigtext/demo/css/league-gothic/League_Gothic-webfont.ttf') format('truetype'), url('http://www.zachleat.com/bigtext/demo/css/league-gothic/League_Gothic-webfont.svg#webfontpm5EArBj') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
+@font-face { 
+  font-family: Goudy;
+  src: url('GoudyBookletter1911.otf');
+} 
 
 body {
 	background: #FFFFFF;
@@ -38,8 +26,8 @@ em{
 
 blockquote {
 	font-size: 24px;
-	font-style: italic;
 	line-height: 28px;
+    font-style: italic;
 	margin: 5px 5px 5px 5px;
 	padding: 5px 15px 5px 10px;
 	border-left: 2px solid #C0C0C0;
@@ -94,21 +82,20 @@ textarea{
 ************************************************/
 
 a, a:visited {
-	font-style: italic;
-	color: #666666;
+	color: #59BEDD;
+    font-weight: bold;
 	text-decoration: none;
-	}
+}
 	
 a:focus, a:hover, a:active {
-	color: #666666;
-	/* color: #000000; */
+	color: #59BEDD;
+    /* font-weight: bold; */
 	text-decoration: underline;
-	outline: none;
-	}
+}
 	
 a img {
 	border: none;
-	}
+}
 
 /************************************************
 *	Header  									*
@@ -123,32 +110,33 @@ a img {
 	}
 	
 #header h1 {
-  color: #666666;
-	/* color: #000000; */
-	font-size: 36px;
-	font-family: Helvetica, Arial, Trebuchet MS, Verdana;
-	font-weight: normal;
-	margin: 0px;
-	padding: 20px 0px 0px 0px;
-	text-decoration: none;
-	}
+  color: #59BEDD;
+  font-size: 50px;
+  font-family: Goudy, Georgia, Helvetica, Arial, Trebuchet MS, Verdana;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 28px;
+  margin: 30px 5px 5px 5px;
+  padding: 5px 15px 5px 10px;
+}
 	
 #header h1 a, #header h1 a:visited {
-  color: #666666;
-	/* color: #000000; */
-	font-size: 36px;
-	font-family: Helvetica, Arial, Trebuchet MS, Verdana;
+    color: #59BEDD;
+	font-size: 50px;
+	font-family: Goudy, Georgia, Helvetica, Arial, Trebuchet MS, Verdana;
+    font-style: normal;
 	font-weight: normal;
 	margin: 0px;
 	padding: 0px;
 	text-decoration: none;
-	}
+}
 	
 #header h1 a:hover {
-  color: #666666;
-	/* color: #000000; */
-	text-decoration: none;
-	}
+  color: #59BEDD;
+  text-decoration: none;
+}
 	
 .headerleft {
 	width: 640px;
@@ -507,7 +495,11 @@ li.sfHover > a > .sf-sub-indicator {
 	color: #666666;
 	text-decoration: none;
 	}
-	
+
+.source {
+    text-align : right; 
+}	
+
 .slogans {
 	/* float: left; */
 	/* display: block; */
@@ -517,8 +509,17 @@ li.sfHover > a > .sf-sub-indicator {
 	margin: 0px 10px 30px 10px;
 	padding: 0px 0px 30px 0px;
 	/* border-bottom: 2px solid #000000; */
-	border-bottom: 1px solid #666666;
+	border-bottom: 1px solid #EAEAEA;
 }
+.slogans blockquote{
+	font-size: 26px;
+	text-align: center;
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	border-bottom: none;
+}
+
 .slogans h3 {
 	color: #999999;
 	font-family: 'ChunkFiveRegular', Georgia, "Times New Roman", Times, serif;
@@ -723,12 +724,12 @@ li.sfHover > a > .sf-sub-indicator {
 	
 #content h1, #content h2 {
 	color: #999999;
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 36px;
+	font-family: Goudy, Georgia, "Times New Roman", Times, serif;
+	font-size: 28px;
 	font-weight: normal;
-	font-style: italic;
+	font-style: none;
 	line-height: 36px;
-	margin: 0px 0px 10px 0px;
+	margin: 10px 0px 5px 0px;
 	padding: 0px 0px 0px 0px;
 	}
 	
@@ -736,14 +737,18 @@ li.sfHover > a > .sf-sub-indicator {
 	color: #999999;
 	text-decoration: none;
 	border: none;
-	}
+    font-weight: normal;
+    font-style: none;
+}
 	
 #content h1 a:hover, #content h2 a:hover {
   color: #666666;
-	/* color: #000000; */
-	text-decoration: none;
-	border: none;
-	}
+  /* color: #000000; */
+  text-decoration: none;
+  font-weight: normal;
+  font-style: none;
+  border: none;
+}
 	
 h3, h4 {
   color: #666666;
@@ -753,7 +758,7 @@ h3, h4 {
   font-weight: bold;
   font-style: normal;
   text-transform: uppercase;
-  margin: 0px 0px 5px 0px;
+  margin: 20px 0px 5px 0px;
   padding: 0px;
   line-height: 16px;
 }
@@ -1298,17 +1303,6 @@ footer{
 	font-weight: normal;
 	margin: 0px 0px 0px 0px;
 	padding: 10px 20px 0px 20px;
-	}
-	
-.footertop a {
-	/* color: #FFFFFF; */
-	text-decoration: none;
-	}
-	
-.footertop a:hover {
-	/* color: #FFFFFF; */
-    font-weight: normal;
-	text-decoration: underline;
 	}
 	
 .footerbottom {

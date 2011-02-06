@@ -22,17 +22,16 @@ handlers:
 - url: /live-connect-test/
   static_dir: public/live-connect-test
 
-- url: /cse.xml
-  static_files: public/cse.xml
-  upload: public/cse.xml
-
 - url: /humans.txt
   static_files: public/humans.txt
   upload: public/humans.txt
 
-- url: /favicon.ico
-  static_files: public/favicon.ico
-  upload: public/favicon.ico
+- url: /robots.txt
+  static_files: public/robots.txt
+  upload: public/robots.txt
+
+- url: /static
+  static_dir: public
 
 - url: /.*
   script: main.py

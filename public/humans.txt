@@ -4,7 +4,7 @@
 	From: Aarhus, Denmark
 
 /* SITE */
-	Language:Danish
+	Language:English
 	Doctype:HTML5 with CSS3
 	Tools:Google App Engine
 	IDE:Emacs

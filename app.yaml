@@ -1,5 +1,5 @@
 application: jakobdams
-version: test
+version: production
 runtime: python
 api_version: 1
 

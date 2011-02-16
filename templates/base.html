@@ -62,28 +62,23 @@
     {% block content %}{% endblock %}
   </div>
 
-  <footer class="grid_12 vcard"> 
+  <footer class="grid_12 vcard location"> 
     &copy; 2011 &middot;
-    <span class="fn org">Jakob Aarøe Dam</span> 
-    <span class="adr" style="display:none"> 
-      <span class="street-address">Silkeborgvej 9, 2tv</span>
-      <span class="postal-code">8000</span> 
-      <span class="locality">Aarhus</span>
-      <span class="country-name">DK</span>
-    </span>   
+    <address class="adr" style="display:inline"> 
+      <a class="fn url" href="http://jdams.org">Jakob Aarøe Dam</a> 
+      <abbr class="role" title="technologist" />
+      <abbr class="street-address" title="Silkeborgvej 9, 2tv" />
+      <abbr class="postal-code" title="8000" />
+      <abbr class="locality" title="Aarhus" />
+      <abbr class="country-name" title="DK" />
+    </address>
     &middot; Email:   
     <span class="email">
       <span class="domain">cabo.dk</span>
       <span class="user">jakob</span>
     </span> 
-    <span class="geo" style="display:none">
-      <span class="latitude">
-        <span class="value-title" title="56.15"></span>
-      </span>
-      <span class="longitude">
-        <span class="value-title" title="10.19"></span>
-      </span>
-    </span>
+    <abbr class="geo" title="56.15;10.19" />
+
   </footer> 
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>

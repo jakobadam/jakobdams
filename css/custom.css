@@ -11,7 +11,7 @@
 
 body {
 	background: #FFFFFF;
-    color: #666666;
+  color: #666666;
 	font-size: 12px;
 	font-family: Georgia, "Times New Roman", Times, serif;
 	line-height: 20px;
@@ -38,9 +38,10 @@ footer p{
 
 input{ 
     background: #f5f5f5; 
-    border: 1px solid #dddddd; 
+    border: none;
     outline-style:none;  
-    padding:4px;  
+    padding:4px; 
+    margin:0;
 }
 
 textarea{ 
@@ -91,7 +92,7 @@ a img {
 	padding: 0px;
 	}
 	
-#header h1 {
+#header .h1 {
   color: #59BEDD;
   font-size: 50px;
   font-family: Goudy, Georgia, Helvetica, Arial, Trebuchet MS, Verdana;
@@ -104,7 +105,7 @@ a img {
   padding: 5px 15px 5px 10px;
 }
 	
-#header h1 a, #header h1 a:visited {
+#header .h1 a, #header .h1 a:visited {
     color: #59BEDD;
 	font-size: 50px;
 	font-family: Goudy, Georgia, Helvetica, Arial, Trebuchet MS, Verdana;
@@ -115,7 +116,7 @@ a img {
 	text-decoration: none;
 }
 	
-#header h1 a:hover {
+#header .h1 a:hover {
   color: #59BEDD;
   text-decoration: none;
 }
@@ -643,11 +644,12 @@ li.sfHover > a > .sf-sub-indicator {
 	}
 	
 #content h1 a, #content h2 a {
-	color: #999999;
+	color: #59BEDD;
+  /* #999999; */
 	text-decoration: none;
 	border: none;
-    font-weight: normal;
-    font-style: none;
+  font-weight: normal;
+  font-style: none;
 }
 	
 #content h1 a:hover, #content h2 a:hover {

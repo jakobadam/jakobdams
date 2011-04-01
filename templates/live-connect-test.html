@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Applet Deployt and LiveConnect Test | jdams.org{% endblock %}
+{% block description %}Online test of Java-to-JavaScript interaction (LiveConnect) and deployment of Java Applets.{% endblock %}
+
+{% block content %}
+<style>
+pre{border: 1px solid #BEDCE7; background-color: #EAF2F5;}
+code {color: #444;background: none;display: inline;padding:0;}
+.test{list-style: none; overflow: hidden;}
+.test li{ width: 240px; margin: 5px;}
+.true{ background-image:url("/static/img/tick.png"); background-repeat:no-repeat; background-color: #DFD; padding-left:25px; background-position:0 50%;}
+.false{ background-image:url("/static/img/cross.png"); background-color: #FDD; background-repeat:no-repeat; padding-left:25px;}
+.test .true, .test .false{ background-position:0 50%;}
+.testtable .true, .testtable .false{ background-position:50% 50%;}
+.icon{background-position:0 50%;background-repeat:no-repeat;display:block;float:left;height:40px;line-height:40px;padding-left:50px;}
+dl{    overflow:hidden;    }
+dt, dd {    border:1px solid #BEDCE7; background-color:#EAF2F5; padding: 10px 10px 10px 10px; width: 120px; margin: 0;}
+dt{float: left;clear:left;overflow:hidden;}
+dd{float: left;}
+td,th{border:1px solid #BEDCE7; background-color:#EAF2F5; padding: 10px 10px 10px 10px;}
+</style>
+<noscript>Enable JavaScript for this page to work</noscript> 
+<div style="float:right"> 
+  <p>Source available <a href="http://github.com/jakobadam/live-connect-test">here</a></p> 
+  <p>Test results for major browsers <a href="//www.cabo.dk/blog-en/jakobs-blog/applets-missing-information-about-liveconnect-and-deployment">here</a></p> 
+</div> 
+<table id="browser-info"> 
+  <tr> 
+    <th>Browser</th> 
+    <td><span id="browser"></span>&nbsp;<span id="browser-version"></span></td> 
+  </tr> 
+  <tr> 
+    <th>OS</th> 
+    <td id="browser-os"></td> 
+</table> 
+ 
+<h3>Click buttons to test applet deployment and LiveConnect support in your browser</h3> 
+ 
+<p>Note: Opera is buggy with several applets with the same archive. (You can load two applets without trouble)</p> 
+<p>Note: Firefox Mac won't run any of the test for applets without the mayscript attribute.</p> 
+  
+<div id="buttons"></div> 
+<div id="results"></div> 
+<div id="applets"></div> 
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+<script src="/static/live-connect-test/browser.js"></script> 
+<script>
+  applet_dir = '/static/live-connect-test/';
+</script>
+<script src="/static/live-connect-test/checkJava.js"></script> 
+<script src="/static/live-connect-test/appletTest.js"></script> 
+
+<script> 
+  function showWarningIfJavaNotAvailable(){
+    if(!java.isEnabled()){
+      var style = "background-color: #FDD;font-weight:bold;position:fixed;top:0px;width:100%;text-align:center;z-index:1000;left:0px;height:20px;";
+      var warning = jQuery('<div class="warning" style="' + style + '">Java is not present, please enable or download <a href="' + java.java_url + '">here</a>!</div>');
+      warning.hide();
+      jQuery('body').prepend(warning);
+      warning.slideDown();
+    }
+  }
+  showWarningIfJavaNotAvailable();
+  $(document).ready(function(){
+    var button;
+    $('#browser').html(browser.browser);
+    $('#browser-version').html(browser.version);
+    $('#browser-os').html(browser.OS);
+    $.each(applet_specs, function(i,s){
+        button = $("<button>" + s.name + "</button>").click(function(){
+        test(s);
+        $(this).attr('disabled', true);
+      });
+      $('#buttons').append(button);
+    });
+  });
+</script> 
+</div> 
+{% endblock %}
+

@@ -1,6 +1,3 @@
-[submodule "public/live-connect-test"]
-	path = public/live-connect-test
+[submodule "static/live-connect-test"]
+	path = static/live-connect-test
 	url = git@github.com:jakobadam/live-connect-test.git
-[submodule "public/todo-list-example"]
-	path = public/todo-list-example
-	url = git://github.com/jakobadam/event-planner.git

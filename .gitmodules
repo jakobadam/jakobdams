@@ -1,3 +1,6 @@
+[submodule "static/vnc"]
+	path = static/vnc
+	url = git@github.com:jakobadam/vnc.git
 [submodule "static/live-connect-test"]
 	path = static/live-connect-test
 	url = git@github.com:jakobadam/live-connect-test.git

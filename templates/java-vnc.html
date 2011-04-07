@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Java VNC Applet{% endblock %}
 {% block description %}Online test of the Java VNC applet running as an applet in the browser.{% endblock %}
-{% block updated %}<time pubdate datetime="2011-04-06">Apr 6, 2011</time>{%endblock%}
+{% block updated %}<time pubdate datetime="2011-04-07">Apr 7, 2011</time>{%endblock%}
+{% block head %}
+{% endblock %}
+
 {% block content %}
 <style>
-input {width: 200px;padding: 4px 0px 4px 0px;margin: 5px 5px 0px 0px;display: block; background-color:#e6e6e6;}
-form {margin: 5px 10px 0px 0px;}
-pre {padding:0;}
+input{background-color:#ebebeb;}
 button {
 background: url("//ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/tundra/images/buttonEnabled.png") repeat-x scroll left bottom #FFFFFF;
 border-color: #C0C0C0 #C0C0C0 #9B9B9B;
@@ -51,9 +52,12 @@ padding: 0.1em 0.2em 0.2em;
   </form>
 
   <p>
-    <button id="start_button">Start VNC</button>      
+    <button id="start_button" style="vertical-align:bottom">Start VNC</button>
     <img id="loading_indicator" height="18px" alt="loading ..." style="display:none;vertical-align:bottom" src="/static/img/loader.gif" />
-    <span id="status" />
+    <span id="status" />    
+  </p>
+
+  <p>Note about keymappings:<a href="//docs.irigo.com/topics/HEpmybLN" rel="help" target="_blank" class="irigo-tooltip">help</a>
   </p>
   
   <div id="disqus_thread"></div>
@@ -106,5 +110,11 @@ dojo.ready(function(){
 });
 </script>
 
+<script src="//docs.irigo.com/plugin/embed.js"></script>
+<script>
+  dojo.ready(function(){
+    dojo.query('.irigo-tooltip').irigoTooltip();
+  });
+</script>
 {% endblock %}
 

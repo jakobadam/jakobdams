@@ -14,10 +14,10 @@
   <link rel="stylesheet" href="/static/css/style.css?v=3" />
   <link rel="stylesheet" href="/static/css/960.css?v=3" />
   <link rel="stylesheet" href="/static/css/custom.css?v=4" />
-
+  {% block head %}{% endblock %}
   <script src="/static/js/modernizr-1.5.min.js"></script>
 </head>
-<body class="container_12">
+<body class="container_12 tundra">
   <header id="header">
     <div class="grid_8" >
       <p class="h1">
@@ -92,7 +92,6 @@
   <script>!window.jQuery && document.write('<script src="/static/js/jquery-1.4.2.min.js"><\/script>')</script>
 
   <script src="/static/js/superfish.js"></script>
-  <!-- <script src="/static/js/jquery.faded.js"></script> -->
 
   <!--[if lt IE 7 ]>
     <script src="/static/js/dd_belatedpng.js?"></script>

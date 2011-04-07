@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 {% block title %}Java VNC Applet{% endblock %}
 {% block description %}Online test of the Java VNC applet running as an applet in the browser.{% endblock %}
-
+{% block updated %}<time pubdate datetime="2011-04-06">Apr 6, 2011</time>{%endblock%}
 {% block content %}
 <style>
 input {width: 200px;padding: 4px 0px 4px 0px;margin: 5px 5px 0px 0px;display: block; background-color:#e6e6e6;}
 form {margin: 5px 10px 0px 0px;}
 pre {padding:0;}
+button {
+background: url("//ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/tundra/images/buttonEnabled.png") repeat-x scroll left bottom #FFFFFF;
+border-color: #C0C0C0 #C0C0C0 #9B9B9B;
+border-style: solid;
+border-width: 1px;
+padding: 0.1em 0.2em 0.2em;
+}
 </style>
 <div class="grid_12">
   <div style="float:right"> 
@@ -15,9 +22,9 @@ pre {padding:0;}
 
   <h1>VNC in the browser</h1>
   
-  <p>Preconditions: Access to a VNC Server. On Linux use kvm to run a
-  virtual machine with a VNC server. No VNC server at hand, then take
-  the following steps:
+  <p>Preconditions: Access to a VNC Server.</p>
+  <p>On Linux, you can use kvm to run a virtual machine with a VNC
+  server, e.g., by taking the following steps:</p>
 
     <ul>
       <li>Download and extract a prepacked qemu image from <a href="http://wiki.qemu.org/Download">qemu download</a>, e.g., 
@@ -33,44 +40,68 @@ pre {padding:0;}
   </p>
 
   <form>
-    <label for="host">Host</label>
-    <input id="host" type="text" name="host" required="required" placeholder="host" value="localhost" />
-    <label for="port">Port</label>
-    <input id="port" type="text" required="required" placeholder="port" value="5900" />
-    <label for="show_controls">Show controls</label>
-    <select id="show_controls">
-      <option value="no">no</option>
-      <option value="yes">yes</option>
-    </select>
+    <p>
+      <label for="host">Host</label>
+      <input id="host" type="text" name="host" required="required" placeholder="host" value="localhost" />
+    </p>
+    <p>
+      <label for="port">Port</label>
+      <input id="port" type="text" required="required" placeholder="port" value="5900" />
+    </p>
   </form>
-  <button id="startButton">Start VNC</button>
 
-  <div style="float:right">
-    <p>Updated: <time pubdate datetime="2011-04-05">Apr 5, 2011</time></p>
-  </div>
-
+  <p>
+    <button id="start_button">Start VNC</button>      
+    <img id="loading_indicator" height="18px" alt="loading ..." style="display:none;vertical-align:bottom" src="/static/img/loader.gif" />
+    <span id="status" />
+  </p>
+  
+  <div id="disqus_thread"></div>
 </div>
 
 <div id="applets"></div>
 
 <script src="//ajax.googleapis.com/ajax/libs/dojo/1.5/dojo/dojo.xd.js"></script>
-<script src="/static/vnc/examples/applet.js?v=1"></script>
-<script src="/static/vnc/examples/vnc.js?v=1"></script>
+<script src="/static/vnc/examples/applet.js?v=4"></script>
+<script src="/static/vnc/examples/vnc.js?v=4"></script>
 <script>
 dojo.ready(function(){
 
+  var vnc_client_ids = {};
+  
   function getArgs(){
     return {
       host: dojo.byId('host').value,
       port: dojo.byId('port').value,
-      show_controls: dojo.byId('show_controls').value,
       title: "VNC Remote Desktop Viewer",
       archive: '/static/vnc/examples/vnc.jar'
     };
   }
 
-  dojo.query('#startButton').onclick(function(){
-    vnc.start('applets', getArgs());
+  dojo.query('#start_button').onclick(function(){
+    var id = vnc.start('applets', getArgs());
+    vnc_client_ids[id] = true;
+  });
+
+  dojo.subscribe('vnc:inject', function(){
+    dojo.query('#loading_indicator').style('display', 'inline');
+  });
+
+  dojo.subscribe(vnc.INIT, function(){
+    dojo.query('#loading_indicator').style('display', 'none');
+    dojo.byId('status').innerHTML = '<span style="color:green">started</span>';
+  });
+
+  dojo.subscribe(vnc.DESTROY, function(obj){
+    dojo.query('#loading_indicator').style('display', 'none');
+    dojo.byId('status').innerHTML = '<span style="color:green">' + obj.msg + '</span>';
+    dojo.destroy(obj.id);
+  });
+
+  dojo.subscribe(vnc.CONNECTION_ERROR, function(obj){
+    dojo.query('#loading_indicator').style('display', 'none');
+    dojo.byId('status').innerHTML = '<span style="color:red">' + obj.msg + '</span>';
+    dojo.destroy(obj.id);
   });
 });
 </script>

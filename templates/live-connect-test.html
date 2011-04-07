@@ -1,6 +1,7 @@
 {% extends "base.html" %}
-{% block title %}Applet Deployt and LiveConnect Test | jdams.org{% endblock %}
+{% block title %}Applet Deployment and LiveConnect Test{% endblock %}
 {% block description %}Online test of Java-to-JavaScript interaction (LiveConnect) and deployment of Java Applets.{% endblock %}
+{% block updated %}<time pubdate datetime="2011-04-06">Apr 6, 2011</time>{%endblock%}
 
 {% block content %}
 <style>
@@ -20,28 +21,34 @@ dd{float: left;}
 td,th{border:1px solid #BEDCE7; background-color:#EAF2F5; padding: 10px 10px 10px 10px;}
 </style>
 <noscript>Enable JavaScript for this page to work</noscript> 
-<div style="float:right"> 
-  <p>Source available <a href="http://github.com/jakobadam/live-connect-test">here</a></p> 
-  <p>Test results for major browsers <a href="http://www.cabo.dk/blog/jakobs-blog/applets-missing-information-about-liveconnect-and-deployment">here</a></p> 
-</div> 
-<table id="browser-info"> 
-  <tr> 
-    <th>Browser</th> 
-    <td><span id="browser"></span>&nbsp;<span id="browser-version"></span></td> 
-  </tr> 
-  <tr> 
-    <th>OS</th> 
-    <td id="browser-os"></td> 
-</table> 
- 
-<h3>Click buttons to test applet deployment and LiveConnect support in your browser</h3> 
- 
-<p>Note: Opera is buggy with several applets with the same archive. (You can load two applets without trouble)</p> 
-<p>Note: Firefox Mac won't run any of the test for applets without the mayscript attribute.</p> 
-  
-<div id="buttons"></div> 
-<div id="results"></div> 
-<div id="applets"></div> 
+<div class="grid_12">
+  <div style="float:right"> 
+    <p>Source available <a href="http://github.com/jakobadam/live-connect-test">here</a></p> 
+    <p>Test results for major browsers <a href="http://www.cabo.dk/blog/jakobs-blog/applets-missing-information-about-liveconnect-and-deployment">here</a></p> 
+  </div>
+  <h1>Applet Deployment and LiveConnect Test</h1> 
+  <table id="browser-info"> 
+    <tr> 
+      <th>Browser</th> 
+      <td><span id="browser"></span>&nbsp;<span id="browser-version"></span></td> 
+    </tr> 
+    <tr> 
+      <th>OS</th> 
+      <td id="browser-os"></td> 
+  </table> 
+   
+  <h3>Click buttons to test applet deployment and LiveConnect support in your browser</h3> 
+   
+  <p>Note: Opera is buggy with several applets with the same archive. (You can load two applets without trouble)</p> 
+  <p>Note: Firefox Mac won't run any of the test for applets without the mayscript attribute.</p> 
+    
+  <div id="buttons"></div> 
+  <div id="results"></div> 
+  <div id="applets"></div> 
+  <div id="disqus_thread"></div>
+</div>
+
+
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
 <script src="/static/live-connect-test/browser.js"></script> 

@@ -1060,3 +1060,15 @@ footer{
 .error{
     background-color: #FF5E99;
 }
+
+.updated{
+    float:right;
+    position:relative;
+    top:-25px;
+}
+
+#disqus_thread{
+    margin-top: 10px;
+    border-top: 1px solid #EAEAEA;
+    padding-top: 10px;
+}

@@ -5,6 +5,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import template
 
+from django.template import TemplateDoesNotExist
+
 TEMPLATE_DIR = "templates"
 MAIL = "jakob.a.dam@gmail.com"
 
@@ -21,7 +23,10 @@ class Page(webapp.RequestHandler):
         path = os.environ['PATH_INFO'].rstrip("/").lstrip("/")
         if path == "":
             path = "index"
-        render("%s.html" % (path), self)
+        try:
+            render("%s.html" % (path), self)
+        except TemplateDoesNotExist:
+            self.error(404)
 
 application = webapp.WSGIApplication([
         ('^.*$', Page)

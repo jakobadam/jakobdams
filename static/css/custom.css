@@ -631,30 +631,36 @@ li.sfHover > a > .sf-sub-indicator {
 	margin: 0px 0px 5px 0px;
 	overflow: hidden;
 	}
-	
-#content h1, #content h2 {
+
+h1{
+	font-size: 35px;
+	line-height: 35px;
+}	
+
+h2{
+	font-size: 28px;
+	line-height: 28px;
+}
+
+h1, h2 {
 	color: #999999;
 	font-family: Goudy, Georgia, "Times New Roman", Times, serif;
-	font-size: 28px;
 	font-weight: normal;
 	font-style: none;
-	line-height: 36px;
 	margin: 10px 0px 5px 0px;
 	padding: 0px 0px 0px 0px;
-	}
+}
 	
-#content h1 a, #content h2 a {
+h1 a, h2 a {
 	color: #59BEDD;
-  /* #999999; */
 	text-decoration: none;
 	border: none;
   font-weight: normal;
   font-style: none;
 }
 	
-#content h1 a:hover, #content h2 a:hover {
+h1 a:hover,  h2 a:hover {
   color: #666666;
-  /* color: #000000; */
   text-decoration: none;
   font-weight: normal;
   font-style: none;
@@ -674,7 +680,7 @@ h3, h4 {
   line-height: 16px;
 }
 	
-h3 a, #content h4 a {
+h3 a,  h4 a {
   color: #666666;
 	/* color: #000000; */
 	font-style: normal;
@@ -682,13 +688,13 @@ h3 a, #content h4 a {
 	border: none;
 	}
 	
-#content h3 a:hover, #content h4 a:hover {
+ h3 a:hover,  h4 a:hover {
 	color: #666666;
 	text-decoration: none;
 	border: none;
 	}
 	
-#content h5, #content h6 {
+ h5,  h6 {
   color: #666666;
 	/* color: #000000; */
 	font-size: 16px;
@@ -701,14 +707,14 @@ h3 a, #content h4 a {
 	line-height: 20px;
 	}
 	
-#content h5 a, #content h6 a {
+ h5 a,  h6 a {
   color: #666666;
 	/* color: #000000; */
 	text-decoration: none;
 	border: none;
 	}
 	
-#content h5 a:hover, #content h6 a:hover {
+ h5 a:hover,  h6 a:hover {
 	color: #666666;
 	text-decoration: none;
 	border: none;

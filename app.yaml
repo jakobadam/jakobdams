@@ -21,5 +21,8 @@ handlers:
   static_files: static/favicon.ico
   upload: static/favicon.ico
 
+- url: /uploads
+  script: plupload.py 
+
 - url: /.*
   script: main.py

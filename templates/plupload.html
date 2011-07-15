@@ -23,7 +23,12 @@
   
   <h3>More</h3>
   <ul>
-    <li>Take a look at the official <a href="http://www.plupload.com/">plupload</a> page</li>
+    <li>Take a look at the
+    official <a href="http://www.plupload.com/">plupload</a>
+    page. View
+    the <a href="http://www.plupload.com/punbb/viewtopic.php?id=16">Large
+    files &gt; 2GB</a> thread in the plupload forum.
+    </li>
     <li>The source code for the fork of plupload that includes the
     java runtime is available
     at <a href="https://github.com/jakobadam/plupload">github</a>. <div>[EDIT
@@ -64,7 +69,7 @@ dojo.ready(function() {
   dojo.query("#java_uploader").pluploadQueue({
     runtimes : 'java',
     url : '/uploads',
-    chunk_size : '5mb',
+    chunk_size : '1mb',
     java_applet_url: '/static/plupload/applet/plupload.java.jar',
     loader_url: '/static/plupload/loader.gif'
   });

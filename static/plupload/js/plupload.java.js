@@ -30,7 +30,7 @@
 
     getFeatures : function() {
       return {
-        java: javaplugin.present,
+        java: applet.hasVersion('1.5'),
         chunks: true,
         progress: true
       };
@@ -101,13 +101,14 @@
       document.body.appendChild(appletContainer);
 
       $.applet.inject(appletContainer, {
-        archive: url, 
+        archive: url + '?v=' + new Date().getTime(), 
         id: escape(uploader.id),
         code: 'plupload.Plupload',
         callback: 'plupload.applet.pluploadjavatrigger'
       });
 
       uploader.bind("UploadFile", function(up, file) {
+          console.log('UploadFile', up, file);
           var settings = up.settings,
               abs_url = location.protocol + '//' + location.host;
 
@@ -124,10 +125,15 @@
           
           // converted to string since number type conversion is buggy in MRJ runtime
           // In Firefox Mac (MRJ) runtime every number is a double
-          getApplet().uploadFile(lookup[file.id] + "", abs_url, document.cookie, settings.chunk_size + "", (settings.retries || 3) + "");          
+        console.log('calling uploadFile on applet');
+        typeof(lookup[file.id]);
+
+        getApplet().uploadFile(lookup[file.id] + "", abs_url, document.cookie, settings.chunk_size, (settings.retries || 3));          
+
       });
    
       uploader.bind("SelectFiles", function(up){
+        console.log('SelectFile', up);
         getApplet().openFileDialog();
       });
 

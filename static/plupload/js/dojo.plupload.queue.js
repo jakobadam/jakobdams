@@ -202,6 +202,8 @@ dojo.require("dojo.NodeList-manipulate"); // NodeList::val()
       
       // Enable drag/drop
       if (up.features.dragdrop && up.settings.dragdrop) {
+        console.log('drag drop');
+
         up.settings.drop_element = id + '_filelist';
         d.place('<li class="plupload_droptext">' + _("Drag files here.") + '</li>', id + '_filelist', 'last');
       }
@@ -219,7 +221,7 @@ dojo.require("dojo.NodeList-manipulate"); // NodeList::val()
           $('#' + file.id).empty();
           uploader.removeFile(file);
         });
-        uploader.selectFiles();           
+        uploader.trigger('SelectFiles');
         e.preventDefault();
       });
     

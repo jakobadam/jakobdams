@@ -101,7 +101,7 @@
       document.body.appendChild(appletContainer);
 
       $.applet.inject(appletContainer, {
-        archive: url + '?v=' + new Date().getTime(), 
+        archive: url,
         id: escape(uploader.id),
         code: 'plupload.Plupload',
         callback: 'plupload.applet.pluploadjavatrigger'

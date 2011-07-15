@@ -1,26 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Plupload With Java Runtime{% endblock %}
 {% block description %}Plupload example using the java runtime for uploads.{% endblock %}
-{% block updated %}<time pubdate datetime="2011-04-07">Apr 18, 2011</time>{%endblock%}
+{% block updated %}<time pubdate datetime="2011-07-15">Fri 15, 2011</time>{%endblock%}
 {% block head %}
 <script src="//ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/dojo.xd.js"></script>
-<link rel="stylesheet" href="/static/plupload/plupload.queue.css" />
+<link rel="stylesheet" href="/static/plupload/css/jquery.plupload.queue.css" />
 {% endblock %}
 
 {% block content %}
 <div class="grid_12">
-	<h1>Plupload Dojo Queue Widget - using Java runtime</h1>
+  <h1>Plupload Dojo Queue Widget - using Java runtime</h1>
 
-	<h3>The java runtime is an applet that supports unlimited sized
-	streamed integrity checked uploads.</h3>
+  <h3>The java runtime is an applet that supports unlimited sized
+    streamed integrity checked uploads.</h3>
   <p><em>Note:</em> Uploads are not persisted, the Google App Engine
-  back-end just reads through the file stream.</p>
+    back-end just reads through the file stream.</p>
 
-	<div>
-		<h3>Java runtime</h3>
-		<div id="java_uploader" style="width: 450px; height: 330px;margin:20px"></div>
-	</div>
-
+  <div>
+    <h3>Java runtime</h3>
+    <div id="java_uploader" style="width: 450px; height: 330px;margin:20px"></div>
+  </div>
+  
   <h3>More</h3>
   <ul>
     <li>Take a look at the official <a href="http://www.plupload.com/">plupload</a> page</li>
@@ -33,28 +33,34 @@
 
 </div>
 
-<script src="/static/plupload/check.js"></script>
-<script src="/static/plupload/applet.js"></script>
-<script src="/static/plupload/plupload.js"></script>
-<script src="/static/plupload/plupload.java.js"></script>
-<script src="/static/plupload/dojo.plupload.queue.js"></script>
+<script src="/static/plupload/js/plupload.js"></script>
+<script src="/static/plupload/js/applet.js"></script>
+<script src="/static/plupload/js/plupload.java.js"></script>
+<script src="/static/plupload/js/dojo.plupload.queue.js"></script>
 <script>
-function showWarningIfJavaNotAvailable(){
-  if(!javaplugin.present){
-    var style = "background-color: #FDD;font-weight:bold;position:fixed;top:0px;width:100%;text-align:center;z-index:1000;left:0px;height:20px;";
-    var warning = dojo.create('div', { style:style, innerHTML: 'Java is not present, please enable or download <a href="' + javaplugin.java_url + '">here</a>'}, dojo.body());
-  }
-}
-showWarningIfJavaNotAvailable();
 
 dojo.ready(function() {
-	dojo.query("#java_uploader").pluploadQueue({
-		runtimes : 'java',
-		url : '/uploads',
-		chunk_size : '5mb',
-    java_applet_url: '/static/plupload/plupload.java.jar',
+  if(!applet.hasVersion('1.5')){
+    var style = ['background-color: #FDD',
+                 'font-weight:bold',
+                 'position:fixed',
+                 'top:0px',
+                 'width:100%',
+                 'text-align:center',
+                 'z-index:1000',
+                 'left:0px',
+                 'height:30px'].join(';');
+    var warning = dojo.create('div', { style:style, innerHTML: 'Java is not present, please enable or download <a href="' + applet.java_url + '">here</a>'}, dojo.body());
+  }
+
+
+  dojo.query("#java_uploader").pluploadQueue({
+    runtimes : 'java',
+    url : '/uploads',
+    chunk_size : '5mb',
+    java_applet_url: '/static/plupload/applet/plupload.java.jar',
     loader_url: '/static/plupload/loader.gif'
-	});
+  });
 });
 </script>
 {% endblock %}

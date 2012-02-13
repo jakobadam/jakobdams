@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Distance Sorter{% endblock%}
+{% block description %}{% endblock%}
+{% block updated %}<time pubdate datetime="2012-13-02">Feb 13, 2012</time>{%endblock%}
+{% block head%}
+
+<link href="//static.irigo.com/dojo/latest/dijit/themes/tundra/tundra.css" rel="stylesheet" />
+<link href="//static.irigo.com/dojo/latest/dojox/grid/resources/Grid.css" rel="stylesheet" />
+<link href="//static.irigo.com/dojo/latest/dojox/grid/resources/tundraGrid.css" rel="stylesheet" />
+
+<script src="//static.irigo.com/dojo/latest/dojo/dojo.xd.js"></script>
+<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCk_akz717jyA4fvNoNFmF7rQCY6LKSw7k&sensor=false"></script>
+
+{% endblock%}
+{% block content %}
+<div class="grid_12 tundra">
+  <h1>Distance Calculator</h1>
+
+  <div class="grid_6 alpha">
+      <div id="map_canvas" style="width:400px; height:400px"></div>
+  </div>
+
+  <div class="grid_6 omega">
+      <label for="dst">Enter Destination</label>
+      <input id="dst" />
+      
+      <br><br>
+      
+      <label for="file">Select CSV File</label>
+      <a href="/static/addresses.csv">(example)</a>
+      <input id="file" type="file" />
+      
+      <br><br>
+      
+      <div id="results_wrapper" style="opacity:0">
+          <a id="download" target="_blank">Download results</a>
+          <div id="grid" style="height:300px"></div>
+      </div>
+  </div>
+
+  <script src="/static/js/distance.js"></script>
+
+</div> 
+{% endblock %}

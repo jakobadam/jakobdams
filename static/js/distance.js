@@ -11,8 +11,29 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     alert('The File APIs are not fully supported in this browser. Try Google Chrome');
 }
 
+if(typeof WebKitBlobBuilder !== 'undefined'){
+    BlobBuilder = WebKitBlobBuilder;
+}
+else if(typeof MozBlobBuilder !== 'undefined'){
+    BlobBuilder = MozBlobBuilder;    
+}
+else{
+    alert('You will not be able to download csv file since BlobBuilder is not supported by browser! Try Firefox or Chrome');
+}
+
+if(typeof window.URL === 'undefined'){
+    if(typeof window.webkitURL !== 'undefined'){
+        window.URL = window.webkitURL;
+    }
+    else{
+        alert('You will not be able to download csv file since BlobBuilder is not fully supported by browser! Try Firefox or Chrome');
+    }
+}
+
+
+
 CSV_SEPERATOR = '|';
-CSV_FIELDS = ['address', 'distance', 'lat', 'lng'];
+CSV_FIELDS = ['cpr', 'address', 'distance', 'lat', 'lng'];
 
 function onFileLoaded(text){}
 function onFileParsed(store){}
@@ -55,8 +76,9 @@ function createGrid(){
     var grid = new dojox.grid.DataGrid({
         store: store,
         structure: [
-            {field:'address', width:'300px'}, 
-            {field:'distance', width:'100px'}]
+            {field:'cpr', width:'70px'}, 
+            {field:'address', width:'270px'}, 
+            {field:'distance', width:'90px'}]
     }, 'grid');
     grid.startup();
 }
@@ -128,24 +150,38 @@ function distance(){
     });
 }
 
-function downloadResults(){
+function convert2csv(items){
+    var results = [];
+    dojo.forEach(items, function(item){
+        var line = dojo.replace('{cpr}|{address}|{distance}|{lat}|{lng}', item);
+        // remove all newlines
+        line = line.replace('\n', '');
+        results.push(line);
+    });
+    return results.join('\n');
+}
 
+function downloadResults(){
     store.fetch({
-        sort: [{ attribute: "distance"}],
+        sort: [{attribute: 'distance'}],
         onComplete: function(items){
-            var bb = new WebKitBlobBuilder();
-            dojo.forEach(items, function(item){
-                bb.append(dojo.replace('{address}|{distance}|{lat}|{lng}\n', item));
-            });
-            var blobURL = window.webkitURL.createObjectURL(bb.getBlob());
-            // var blobURL = window.URL.createObjectURL(bb.getBlob());
+            var csv = convert2csv(items);
+            var bb = new BlobBuilder();
+            bb.append(csv);
+            var blobURL = window.URL.createObjectURL(bb.getBlob());
             window.location.href = blobURL;
+        }            
+    });
+}
+
+function showResults (text) {
+    store.fetch({
+        sort: [{attribute: 'distance'}],
+        onComplete: function(items){
+            var csv = convert2csv(items);
+            dojo.byId('results_area').innerHTML = csv;
         }
     });
-
-    // Obtain a blob URL reference to our worker 'file'.
-    // Note: window.webkitURL.createObjectURL() in Chrome 10+.
-
 }
 
 dojo.ready(
@@ -169,4 +205,5 @@ dojo.ready(
         dojo.connect('onFileParsed', 'geocode');
         dojo.connect('onGeocoded', 'distance');
         dojo.connect(dojo.byId('download'), 'onclick', 'downloadResults');
+        dojo.connect(dojo.byId('show'), 'onclick', 'showResults');
 });

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Time and Distance for ambulance{% endblock%}
+{% block description %}{% endblock%}
+{% block updated %}<time pubdate datetime="2012-01-05">May 1, 2012</time>{%endblock%}
+{% block head%}
+
+
+<link href="//ajax.googleapis.com/ajax/libs/dojo/1.7.2/dijit/themes/tundra/tundra.css" rel="stylesheet" />
+<link href="//ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojox/grid/resources/Grid.css" rel="stylesheet" />
+<link href="//ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojox/grid/resources/tundraGrid.css" rel="stylesheet" />
+
+<script>
+var djConfig = {
+    isDebug: true,
+    packages: [{ 
+        name: "heli", 
+        location: "/static/js/heli" 
+    }]
+};
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js"></script>
+<!-- <script src="/static/js/dojo/dojo.js"></script> -->
+<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCk_akz717jyA4fvNoNFmF7rQCY6LKSw7k&sensor=false"></script>
+
+{% endblock%}
+{% block content %}
+<div class="grid_12 tundra">
+  <h1>Time and Distance for ambulance</h1>
+
+  <div class="grid_6 alpha">
+      <div id="map_canvas" style="width:960px; height:600px"></div>
+  </div>
+</div> 
+<script>
+require(["heli/map"]);
+</script>
+{% endblock %}

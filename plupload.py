@@ -9,7 +9,6 @@
 """
 import hashlib
 import os
-import logging
 
 from google.appengine.ext.webapp.util import run_wsgi_app
 
@@ -20,7 +19,7 @@ from werkzeug.exceptions import BadRequest
 from werkzeug.exceptions import HTTPException
 
 from google.appengine.api import memcache
-    
+
 URLENCODED = 'application/x-www-form-urlencoded'
 UPLOAD_DIR = 'uploads'
 
@@ -39,7 +38,7 @@ def write_meta_information_to_memcache(meta_key, md5sum, chunk, chunks):
         memcache.delete(meta_key)
 
 def clean_filename(filename):
-    i = filename.rindex(".")
+    i = filename.rfind(".")
     if i != -1:
         filename = filename[0:i] + filename[i:].lower()
     return secure_filename(filename)
@@ -67,7 +66,7 @@ def upload_with_checksum(request, md5chunk, md5total, chunk, chunks):
     # f = get_or_create_file(chunk, dst)
     # f.write(buf)
     # f.close()
-    
+
     meta_key = dst
     write_meta_information_to_memcache(meta_key, md5total, chunk, chunks)
     return filename
@@ -88,12 +87,12 @@ def upload_simple(request, dst, chunk=0):
     # ...
 
     return filename
-    
+
 def upload(request):
     """Handle uploads from the different runtimes.
-    
+
     HTTP query args:
-    :param name: the filename 
+    :param name: the filename
     :param chunk: the chunk number
     :param chunks: the total number of chunks
     :param md5chunk: md5sum of chunk (optional)
@@ -124,7 +123,7 @@ def probe(request):
         return Response(meta, content_type=URLENCODED)
     else:
         return Response("status=unknown", content_type=URLENCODED)
-    
+
 @Request.application
 def app(request):
     try:

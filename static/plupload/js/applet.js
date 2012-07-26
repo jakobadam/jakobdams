@@ -6,6 +6,9 @@
  *
  */
 
+// support for dojo module loading.
+if(typeof dojo !== 'undefined'){ dojo.provide('java.applet'); }
+
 (function($){
 
    // note: navigator.mimeTypes in safari only includes 'application/x-java-applet
@@ -13,7 +16,7 @@
        java_url = 'http://java.com/en/download/manual.jsp',
        version = "-1";
 
-   function set_highest_version(potential_new_version){
+   function setHighestVersion(potential_new_version){
      if(potential_new_version > version){
        version = potential_new_version;
      }
@@ -45,7 +48,7 @@
        
        try{
          if(new ActiveXObject('JavaWebStart.isInstalled.' + version) != null){
-           set_highest_version(version);
+           setHighestVersion(version);
          }
        }
        catch(e){
@@ -58,29 +61,23 @@
         for(var i = 0; i < versions.length; i++){
           var version = versions[i];
           if(navigator.mimeTypes['application/x-java-applet;version=' + version]){      
-            set_highest_version(version);
+            setHighestVersion(version);
           }
         }
         // add the general one under ''
         if(navigator.mimeTypes['application/x-java-applet']){      
-          set_highest_version("");
+          setHighestVersion("");
         }
       }
    }
 
    function hasVersion(min_version){
-     console.log(min_version);
-
      if(navigator.vendor && (navigator.vendor.indexOf("Apple") !== -1)){
-       console.log('safari');
-
        // safari
        return hasPlugin();
      }
      
      if(min_version !== undefined){
-       console.log('version', version);
-
        return min_version <= version;
      }
      else{
@@ -104,7 +101,7 @@
     plugin: hasPlugin(),
     hasVersion: hasVersion,
     version: version,
-    java_url: java_url,
+    javaUrl: java_url,
 
     inject: function(node, args){
 
@@ -139,7 +136,9 @@
         params.join('\n'),
         '</object>'].join('\n');
       setTimeout(function(){
-        node.innerHTML = t;
+        var wrapperNode = document.createElement('span');
+        wrapperNode.innerHTML = t;
+        node.appendChild(wrapperNode);
       }, 0);}
         
   };

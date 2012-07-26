@@ -51,25 +51,39 @@
 		"application/vnd.ms-powerpoint,ppt pps pot," +
 		"application/zip,zip," +
 		"application/x-shockwave-flash,swf swfl," +
-		"application/vnd.openxmlformats,docx pptx xlsx," +
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.document,docx," +
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.template,dotx," +
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,xlsx," +
+		"application/vnd.openxmlformats-officedocument.presentationml.presentation,pptx," + 
+		"application/vnd.openxmlformats-officedocument.presentationml.template,potx," +
+		"application/vnd.openxmlformats-officedocument.presentationml.slideshow,ppsx," +
+		"application/x-javascript,js," +
+		"application/json,json," +
 		"audio/mpeg,mpga mpega mp2 mp3," +
 		"audio/x-wav,wav," +
 		"audio/mp4,m4a," +
 		"image/bmp,bmp," +
 		"image/gif,gif," +
 		"image/jpeg,jpeg jpg jpe," +
+		"image/photoshop,psd," +
 		"image/png,png," +
 		"image/svg+xml,svg svgz," +
 		"image/tiff,tiff tif," +
+		"text/plain,asc txt text diff log," +
 		"text/html,htm html xhtml," +
+		"text/css,css," +
+		"text/csv,csv," +
 		"text/rtf,rtf," +
 		"video/mpeg,mpeg mpg mpe," +
 		"video/quicktime,qt mov," +
 		"video/mp4,mp4," +
 		"video/x-m4v,m4v," +
 		"video/x-flv,flv," +
+		"video/x-ms-wmv,wmv," +
+		"video/avi,avi," +
+		"video/webm,webm," +
 		"video/vnd.rn-realvideo,rv," +
-		"text/plain,asc txt text diff log," +
+		"application/vnd.oasis.opendocument.formula-template,otf," +
 		"application/octet-stream,exe"
 	);
 
@@ -183,7 +197,7 @@
 		INIT_ERROR : -500,
 
 		/**
-		 * File size error. If the user selects a file that is to large it will be blocked and an error of this type will be triggered.
+		 * File size error. If the user selects a file that is too large it will be blocked and an error of this type will be triggered.
 		 *
 		 * @property FILE_SIZE_ERROR
 		 * @final
@@ -231,6 +245,37 @@
 		 * @final
 		 */
 		mimeTypes : mimes,
+		
+		/**
+		 * In some cases sniffing is the only way around :(
+		 */
+		ua: (function() {
+			var nav = navigator, userAgent = nav.userAgent, vendor = nav.vendor, webkit, opera, safari;
+			
+			webkit = /WebKit/.test(userAgent);
+			safari = webkit && vendor.indexOf('Apple') !== -1;
+			opera = window.opera && window.opera.buildNumber;
+			
+			return {
+				windows: navigator.platform.indexOf('Win') !== -1,
+				ie: !webkit && !opera && (/MSIE/gi).test(userAgent) && (/Explorer/gi).test(nav.appName),
+				webkit: webkit,
+				gecko: !webkit && /Gecko/.test(userAgent),
+				safari: safari,
+				opera: !!opera
+			};
+		}()),
+		
+		/**
+		 * Gets the true type of the built-in object (better version of typeof).
+		 * @credits Angus Croll (http://javascriptweblog.wordpress.com/)
+		 *
+		 * @param {Object} o Object to check.
+		 * @return {String} Object [[Class]]
+		 */
+		typeOf: function(o) {
+			return ({}).toString.call(o).match(/\s([a-z|A-Z]+)/)[1].toLowerCase();
+		},
 
 		/**
 		 * Extends the specified object with another object.
@@ -491,7 +536,7 @@
 			var mul;
 
 			if (typeof(size) == 'string') {
-				size = /^([0-9]+)([mgk]+)$/.exec(size.toLowerCase().replace(/[^0-9mkg]/g, ''));
+				size = /^([0-9]+)([mgk]?)$/.exec(size.toLowerCase().replace(/[^0-9mkg]/g, ''));
 				mul = size[2];
 				size = +size[1];
 
@@ -539,6 +584,29 @@
 			}
 
 			return arr;
+		},
+		
+		/**
+		 * Find an element in array and return it's index if present, otherwise return -1.
+		 *
+		 * @method inArray
+		 * @param {mixed} needle Element to find
+		 * @param {Array} array
+		 * @return {Int} Index of the element, or -1 if not found
+		 */
+		inArray : function(needle, array) {			
+			if (array) {
+				if (Array.prototype.indexOf) {
+					return Array.prototype.indexOf.call(array, needle);
+				}
+			
+				for (var i = 0, length = array.length; i < length; i++) {
+					if (array[i] === needle) {
+						return i;
+					}
+				}
+			}
+			return -1;
 		},
 
 		/**
@@ -657,7 +725,11 @@
 			}
 
 			// Add event listener
-			if (obj.attachEvent) {
+			if (obj.addEventListener) {
+				func = callback;
+				
+				obj.addEventListener(name, func, false);
+			} else if (obj.attachEvent) {
 				
 				func = function() {
 					var evt = window.event;
@@ -672,12 +744,7 @@
 					callback(evt);
 				};
 				obj.attachEvent('on' + name, func);
-				
-			} else if (obj.addEventListener) {
-				func = callback;
-				
-				obj.addEventListener(name, func, false);
-			}
+			} 
 			
 			// Log event handler to objects internal Plupload registry
 			if (obj[uid] === undef) {
@@ -786,7 +853,7 @@
 			plupload.each(eventhash[obj[uid]], function(events, name) {
 				plupload.removeEvent(obj, name, key);
 			});		
-		}		
+		}
 	};
 	
 
@@ -824,7 +891,7 @@
 	 * @param {Object} settings Initialization settings, to be used by the uploader instance and runtimes.
 	 */
 	plupload.Uploader = function(settings) {
-		var events = {}, total, files = [], startTime;
+		var events = {}, total, files = [], startTime, disabled = false;
 
 		// Inital total state
 		total = new plupload.QueueProgress();
@@ -848,8 +915,9 @@
 					if (!file && files[i].status == plupload.QUEUED) {
 						file = files[i];
 						file.status = plupload.UPLOADING;
-						this.trigger("BeforeUpload", file);
-						this.trigger("UploadFile", file);
+						if (this.trigger("BeforeUpload", file)) {
+							this.trigger("UploadFile", file);
+						}
 					} else {
 						count++;
 					}
@@ -857,8 +925,8 @@
 
 				// All files are DONE or FAILED
 				if (count == files.length) {
-					this.trigger("UploadComplete", files);
 					this.stop();
+					this.trigger("UploadComplete", files);
 				}
 			}
 		}
@@ -1075,7 +1143,7 @@
 						// Get start time to calculate bps
 						startTime = (+new Date());
 						
-					} else if (up.state == plupload.STOPPED) {
+					} else if (up.state == plupload.STOPPED) {						
 						// Reset currently uploading files
 						for (i = up.files.length - 1; i >= 0; i--) {
 							if (up.files[i].status == plupload.UPLOADING) {
@@ -1092,7 +1160,6 @@
 					// Set failed status if an error occured on a file
 					if (err.file) {
 						err.file.status = plupload.FAILED;
-            err.file.error_message = err.details;
 						calc();
 
 						// Upload next file but detach it from the error event
@@ -1216,19 +1283,22 @@
 			 */
 			stop : function() {
 				if (this.state != plupload.STOPPED) {
-					this.state = plupload.STOPPED;					
+					this.state = plupload.STOPPED;	
+					this.trigger("CancelUpload");				
 					this.trigger("StateChanged");
 				}
 			},
-
-      /**
-       * Select files event. 
-       * 
-       * @method selectFiles  
-       */
-      selectFiles : function() {
-        this.trigger("SelectFiles");
-      },
+			
+			/** 
+			 * Disables/enables browse button on request.
+			 *
+			 * @method disableBrowse
+			 * @param {Boolean} disable Whether to disable or enable (default: true)
+			 */
+			disableBrowse : function() {
+				disabled = arguments[0] !== undef ? arguments[0] : true;
+				this.trigger("DisableBrowse", disabled);
+			},
 
 			/**
 			 * Returns the specified file object by id.
@@ -1312,6 +1382,16 @@
 
 				return true;
 			},
+			
+			/**
+			 * Check whether uploader has any listeners to the specified event.
+			 *
+			 * @method hasEventListener
+			 * @param {String} name Event name to check for.
+			 */
+			hasEventListener : function(name) {
+				return !!events[name.toLowerCase()];
+			},
 
 			/**
 			 * Adds an event listener by name.
@@ -1379,7 +1459,8 @@
 			 *
 			 * @method destroy
 			 */
-			destroy : function() {							
+			destroy : function() {	
+				this.stop();						
 				this.trigger('Destroy');
 				
 				// Clean-up after uploader itself
@@ -1524,14 +1605,6 @@
 	 */
 	plupload.File = function(id, name, size) {
 		var self = this; // Setup alias for self to reduce code size when it's compressed
-
-		/**
-		 * Error message.
-		 *
-		 * @property error_message
-		 * @type String
-		 */
-    self.error_message = "";
 
 		/**
 		 * File id this is a globally unique id for the specific file.
